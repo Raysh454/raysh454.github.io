@@ -15,5 +15,7 @@ export default defineConfig({
       remarkWikilinksAndTags,
       remarkCallouts
     ]
-  }
+  },
+    site: 'https://raysh454.github.io',
+    base: '/portfolio',
 });
