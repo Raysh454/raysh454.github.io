@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node.js Runtime
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm # Change to pnpm or yarn if using alternative package managers
 
       - name: Install Project Dependencies
