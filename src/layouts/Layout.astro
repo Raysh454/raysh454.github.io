@@ -23,5 +23,76 @@ import site from '../data/site.json';
     </main>
     <slot name="footer" />
     <footer class="mt-12 text-center text-sm muted">© {year} {site.title}</footer>
+
+    <script>
+      function setupCodeCopy() {
+        const preBlocks = document.querySelectorAll('.obsidian-content pre');
+        preBlocks.forEach((pre) => {
+          if (pre.parentElement && pre.parentElement.classList.contains('code-block-wrapper')) {
+            return;
+          }
+
+          const wrapper = document.createElement('div');
+          wrapper.className = 'code-block-wrapper';
+          
+          pre.parentNode.insertBefore(wrapper, pre);
+          wrapper.appendChild(pre);
+          
+          let lang = 'code';
+          const codeNode = pre.querySelector('code');
+          if (codeNode) {
+            for (const cls of codeNode.classList) {
+              if (cls.startsWith('language-') || cls.startsWith('lang-')) {
+                lang = cls.replace(/^(language-|lang-)/, '');
+                break;
+              }
+            }
+          }
+          
+          if (pre.getAttribute('data-language')) {
+            lang = pre.getAttribute('data-language');
+          }
+          
+          const header = document.createElement('div');
+          header.className = 'code-block-header-floating';
+          
+          const langLabel = document.createElement('span');
+          langLabel.className = 'code-lang-label';
+          langLabel.textContent = lang;
+          
+          const copyBtn = document.createElement('button');
+          copyBtn.className = 'copy-code-btn';
+          copyBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span>Copy</span>
+          `;
+          
+          copyBtn.addEventListener('click', async () => {
+            const text = codeNode ? codeNode.innerText : pre.innerText;
+            try {
+              await navigator.clipboard.writeText(text);
+              const textSpan = copyBtn.querySelector('span');
+              if (textSpan) textSpan.textContent = 'Copied!';
+              copyBtn.style.color = 'var(--color-accent)';
+              copyBtn.style.borderColor = 'var(--color-accent)';
+              setTimeout(() => {
+                if (textSpan) textSpan.textContent = 'Copy';
+                copyBtn.style.color = '';
+                copyBtn.style.borderColor = '';
+              }, 2000);
+            } catch (err) {
+              console.error('Failed to copy text: ', err);
+            }
+          });
+          
+          header.appendChild(langLabel);
+          header.appendChild(copyBtn);
+          wrapper.appendChild(header);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', setupCodeCopy);
+      document.addEventListener('astro:page-load', setupCodeCopy);
+    </script>
   </body>
 </html>

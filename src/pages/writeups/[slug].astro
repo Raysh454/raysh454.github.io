@@ -25,18 +25,158 @@ const Post = matched?.mod?.default;
 ---
 <Layout>
   {Post ? (
-    <article>
+    <article class="max-w-4xl mx-auto px-4 py-6">
       <SEO title={matched.meta.title} description={matched.meta.summary} image={matched.meta.image} url={`${Astro.site ?? ''}/writeups/${matched.meta.slug}`}/>
-      <h1 class="text-3xl font-semibold">{matched.meta.title}</h1>
-      <div class="muted">{matched.meta.date}</div>
-      <div class="mt-4">{/* Render Markdown content component */}
+      
+      {/* Title Header */}
+      <div class="mb-8 border-b border-white/5 pb-6">
+        <div class="flex items-center gap-2 text-xs font-mono text-zinc-500 mb-2 uppercase tracking-widest">
+          <a href="/writeups" class="hover:text-accent transition-colors">Writeups</a>
+          <span>/</span>
+          <span class="text-zinc-400">{matched.meta.platform || 'HTB'}</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-3 leading-tight">{matched.meta.title}</h1>
+        <div class="text-xs font-mono text-zinc-500 flex flex-wrap gap-4">
+          <div class="flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Published: {matched.meta.date}</span>
+          </div>
+          {matched.meta.status && (
+            <div class="flex items-center gap-1">
+              <span class={`w-1.5 h-1.5 rounded-full ${matched.meta.status.toLowerCase() === 'complete' ? 'bg-accent shadow-[0_0_8px_var(--color-accent-glow)]' : 'bg-amber-400'}`}></span>
+              <span>Status: {matched.meta.status}</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Obsidian Properties Panel */}
+      <div class="cyber-card p-5 rounded-2xl mb-8 border border-white/5 bg-zinc-950/30 backdrop-blur-md">
+        <div class="flex items-center gap-2 mb-4 border-b border-white/5 pb-2">
+          <svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+          <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400">Properties</h3>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          {/* Row: Platform */}
+          {matched.meta.platform && (
+            <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+              <span class="text-zinc-500 font-mono text-xs flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+                Platform
+              </span>
+              <span class="font-semibold text-zinc-200">{matched.meta.platform}</span>
+            </div>
+          )}
+          
+          {/* Row: OS */}
+          {matched.meta.os && (
+            <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+              <span class="text-zinc-500 font-mono text-xs flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="2"/><path d="M12 2v20"/><path d="M2 12h20"/></svg>
+                OS
+              </span>
+              <span class="font-semibold text-zinc-200 flex items-center gap-1.5">
+                {matched.meta.os.toLowerCase().includes('win') ? (
+                  <svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.45H0V3.449zM0 12.45h9.75v9.45L0 20.551v-8.1zM10.8 1.95L24 0v11.55H10.8V1.95zM10.8 12.45H24v11.55l-13.2-1.95v-9.6z"/></svg>
+                ) : (
+                  <svg class="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 12a5 5 0 1 1 0-8.3A5 5 0 0 1 12 12zm0 0a5 5 0 1 0 0 8.3A5 5 0 0 0 12 12z"/><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"/></svg>
+                )}
+                {matched.meta.os}
+              </span>
+            </div>
+          )}
+          
+          {/* Row: Difficulty */}
+          {matched.meta.difficulty && (
+            <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+              <span class="text-zinc-500 font-mono text-xs flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                Difficulty
+              </span>
+              <span class={`px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wide border ${
+                matched.meta.difficulty.toLowerCase() === 'easy' ? 'bg-accent/10 border-accent/20 text-accent' :
+                matched.meta.difficulty.toLowerCase() === 'medium' ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' :
+                'bg-rose-500/10 border-rose-500/20 text-rose-500'
+              }`}>
+                {matched.meta.difficulty}
+              </span>
+            </div>
+          )}
+
+          {/* Row: Status */}
+          {matched.meta.status && (
+            <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+              <span class="text-zinc-500 font-mono text-xs flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Status
+              </span>
+              <span class={`px-2 py-0.5 rounded text-xs font-semibold ${
+                matched.meta.status.toLowerCase() === 'complete' ? 'bg-zinc-800 text-accent' : 'bg-zinc-800 text-amber-400'
+              }`}>
+                {matched.meta.status}
+              </span>
+            </div>
+          )}
+          
+          {/* Row: IP Address */}
+          {matched.meta.ip && (
+            <div class="flex items-center justify-between py-1.5 border-b border-white/5 md:col-span-2">
+              <span class="text-zinc-500 font-mono text-xs flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M7 7h.01"/><path d="M17 7h.01"/><path d="M7 17h.01"/><path d="M17 17h.01"/></svg>
+                Target IP
+              </span>
+              <div class="flex items-center gap-2">
+                <code class="font-mono text-xs text-accent bg-accent/5 px-2 py-0.5 rounded border border-accent/15 tracking-wider select-all">{matched.meta.ip}</code>
+                <button 
+                  id="copy-ip-btn"
+                  data-ip={matched.meta.ip}
+                  class="p-1 rounded border border-white/10 hover:border-accent/40 bg-white/5 hover:bg-accent/5 hover:text-accent transition-all text-zinc-400 cursor-pointer"
+                  title="Copy IP Address"
+                >
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Markdown Body */}
+      <div class="obsidian-content">
         <Post />
       </div>
     </article>
   ) : (
-    <div>
+    <div class="max-w-4xl mx-auto px-4 py-12">
       <h2 class="text-xl font-semibold">Not found</h2>
       <p class="muted">The requested writeup could not be found.</p>
     </div>
   )}
 </Layout>
+
+<script>
+  function setupCopyIp() {
+    const btn = document.getElementById('copy-ip-btn');
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      const ip = btn.getAttribute('data-ip');
+      if (!ip) return;
+      try {
+        await navigator.clipboard.writeText(ip);
+        const originalInner = btn.innerHTML;
+        btn.innerHTML = `<svg class="w-3.5 h-3.5 text-accent animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+        btn.style.borderColor = 'var(--color-accent)';
+        setTimeout(() => {
+          btn.innerHTML = originalInner;
+          btn.style.borderColor = '';
+        }, 1500);
+      } catch (err) {
+        console.error('Failed to copy IP address:', err);
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupCopyIp);
+  document.addEventListener('astro:page-load', setupCopyIp);
+</script>

@@ -22,6 +22,18 @@ export function parseCustomWriteup(filePath, fileInstance) {
   const platformMatch = rawText.match(/^Platform:\s*([^\n\r]+)/m);
   const platform = platformMatch ? platformMatch[1].trim() : '';
 
+  const aliasMatch = rawText.match(/^Alias:\s*([^\n\r]+)/m);
+  const alias = aliasMatch ? aliasMatch[1].trim() : '';
+
+  const osMatch = rawText.match(/^OS:\s*([^\n\r]+)/m);
+  const os = osMatch ? osMatch[1].trim() : '';
+
+  const difficultyMatch = rawText.match(/^Difficulty:\s*([^\n\r]+)/m);
+  const difficulty = difficultyMatch ? difficultyMatch[1].trim() : '';
+
+  const ipMatch = rawText.match(/^IP:\s*([^\n\r]+)/m);
+  const ip = ipMatch ? ipMatch[1].trim() : '';
+
   // 4. Generate a completely bulletproof slug parameter
   // If fm.slug doesn't exist, compute it from the clean filename
   const dynamicSlug = filename
@@ -35,6 +47,10 @@ export function parseCustomWriteup(filePath, fileInstance) {
     status: fm.status || status,
     date: fm.date || rawDate,
     platform: fm.platform || platform,
+    alias: fm.alias || alias,
+    os: fm.os || os,
+    difficulty: fm.difficulty || difficulty,
+    ip: fm.ip || ip,
     slug: fm.slug || dynamicSlug || 'fallback-slug' 
   };
 }

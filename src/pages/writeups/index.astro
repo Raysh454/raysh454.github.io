@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.jsx'
 import { parseCustomWriteup } from '../../utils/markdown.js';
 
 // 1. Ingest all writeups modules
@@ -44,6 +45,10 @@ const pages = Object.entries(modules)
           </a>
         </li>
       ))}
+      {/* Card Footer */}
+      <div class="text-center pt-2">
+          <Footer>
+      </div>
     </ul>
   </div>
 </Layout>

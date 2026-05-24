@@ -1,4 +1,5 @@
 ---
+import Footer from '../components/Footer.jsx'
 import Layout from '../layouts/Layout.astro';
 import path from 'path';
 import { parseCustomWriteup } from '../utils/markdown.js';
@@ -204,9 +205,7 @@ function slugFrom(meta) {
 
           {/* Card Footer */}
           <div class="text-center pt-2">
-            <p class="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
-              // Security Architecture Redefined
-            </p>
+              <Footer>
           </div>
 
         </div>

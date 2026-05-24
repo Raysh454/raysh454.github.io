@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.jsx'
 const modules = import.meta.glob('../../../content/projects/*.md', { eager: true });
 const projects = Object.values(modules).map(mod => ({ meta: mod.frontmatter }));
 projects.sort((a,b) => new Date(b.meta.date) - new Date(a.meta.date));
@@ -55,5 +56,6 @@ function metaEntries(meta) {
         );
       })}
     </ul>
+    <Footer>
   </div>
 </Layout>
