@@ -17,5 +17,5 @@ export default defineConfig({
     ]
   },
     site: 'https://raysh454.github.io',
-    base: '/portfolio',
+    base: '/',
 });
