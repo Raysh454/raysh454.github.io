@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+export async function getStaticPaths(){
+  const m = import.meta.glob('../../../content/projects/*.md', { eager: true });
+  return Object.values(m)
+    .map(x => {
+      const fm = x.frontmatter ?? {};
+      const slug = fm.slug ?? (fm.title || '').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+      return { params: { slug } };
+    })
+    .filter(entry => entry.params.slug);
+}
+const { slug } = Astro.params;
+const modules = import.meta.glob('../../../content/projects/*.md', { eager: true });
+let matched = null;
+for (const [p, m] of Object.entries(modules)) {
+  const fm = m.frontmatter ?? {};
+  const s = fm.slug ?? (fm.title || '').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+  if (s === slug) { matched = { mod: m, fm }; break; }
+}
+const Project = matched?.mod?.default;
+---
+<Layout>
+  {Project ? (
+    <article>
+      <h1 class="text-3xl font-semibold">{matched.fm.title}</h1>
+      <div class="muted">{matched.fm.date}</div>
+      <div class="mt-4">{matched.fm.summary}</div>
+      {matched.fm.repo ? (<p class="mt-4"><a class="text-accent" href={matched.fm.repo} target="_blank" rel="noopener">Repository</a></p>) : null}
+      <div class="mt-6"><Project /></div>
+    </article>
+  ) : (
+    <div>
+      <h2 class="text-xl font-semibold">Not found</h2>
+      <p class="muted">The requested project could not be found.</p>
+    </div>
+  )}
+</Layout>

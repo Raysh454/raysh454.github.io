@@ -1,0 +1,20 @@
+---
+const { title, description, image, url } = Astro.props;
+import site from '../data/site.json';
+const metaTitle = title ? `${title} — ${site.title}` : site.title;
+const metaDesc = description ?? site.description;
+const metaImage = image ?? site.image;
+const metaUrl = url ?? site.siteUrl;
+---
+<title>{metaTitle}</title>
+<meta name="description" content={metaDesc} />
+<meta property="og:title" content={metaTitle} />
+<meta property="og:description" content={metaDesc} />
+<meta property="og:image" content={metaImage} />
+<meta property="og:url" content={metaUrl} />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={metaTitle} />
+<meta name="twitter:description" content={metaDesc} />
+<meta name="twitter:image" content={metaImage} />
+<link rel="canonical" href={metaUrl} />

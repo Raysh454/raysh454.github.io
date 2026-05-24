@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const modules = import.meta.glob('../../../content/projects/*.md', { eager: true });
+const projects = Object.values(modules).map(mod => ({ meta: mod.frontmatter }));
+projects.sort((a,b) => new Date(b.meta.date) - new Date(a.meta.date));
+function slugFrom(meta){ return meta.slug ?? meta.title.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,''); }
+function formatLabel(key) {
+  return key
+    .replace(/[_-]/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+function formatValue(value) {
+  if (Array.isArray(value)) return value.join(', ');
+  if (value === null || value === undefined) return '';
+  return String(value);
+}
+function metaEntries(meta) {
+  const excludeKeys = new Set(['title', 'slug', 'summary']);
+  return Object.entries(meta || {})
+    .filter(([key, value]) => !excludeKeys.has(key) && value)
+    .map(([key, value]) => ({
+      label: formatLabel(key),
+      value: formatValue(value)
+    }));
+}
+---
+<Layout>
+  <div class="max-w-5xl mx-auto">
+    <h1 class="text-3xl font-semibold mb-6">Projects</h1>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {projects.map(p => {
+        const entries = metaEntries(p.meta);
+        return (
+          <li class="card rounded-xl p-5 group">
+            <a class="block" href={`/projects/${slugFrom(p.meta)}`}>
+              <h2 class="text-xl font-semibold group-hover:text-accent transition-colors">
+                {p.meta.title}
+              </h2>
+              {p.meta.summary && (
+                <p class="mt-2 text-sm text-zinc-400 group-hover:text-zinc-200 transition-colors">
+                  {p.meta.summary}
+                </p>
+              )}
+              {entries.length > 0 && (
+                <div class="mt-3 flex flex-wrap gap-2 text-xs font-mono">
+                  {entries.map(entry => (
+                    <span class="px-2 py-1 rounded-full border border-white/5 text-zinc-400 group-hover:text-accent group-hover:border-accent/30 transition-colors">
+                      {entry.label}: {entry.value}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</Layout>

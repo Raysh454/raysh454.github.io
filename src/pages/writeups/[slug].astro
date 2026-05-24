@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SEO from '../../components/SEO.astro';
+import { parseCustomWriteup } from '../../utils/markdown.js';
+
+export async function getStaticPaths(){
+  const modules = import.meta.glob('../../../content/writeups/*.md', { eager: true });
+  return Object.entries(modules)
+    .map(([filePath, mod]) => {
+      const parsed = parseCustomWriteup(filePath, mod);
+      return { params: { slug: parsed.slug } };
+    })
+    .filter(entry => entry.params.slug);
+}
+
+const modules = import.meta.glob('../../../content/writeups/*.md', { eager: true });
+const entries = Object.entries(modules).map(([filePath, mod]) => {
+  const parsed = parseCustomWriteup(filePath, mod);
+  const meta = { ...(mod.frontmatter ?? {}), ...parsed };
+  return { slug: parsed.slug, mod, meta };
+});
+const { slug } = Astro.params;
+const matched = entries.find(entry => entry.slug === slug);
+const Post = matched?.mod?.default;
+---
+<Layout>
+  {Post ? (
+    <article>
+      <SEO title={matched.meta.title} description={matched.meta.summary} image={matched.meta.image} url={`${Astro.site ?? ''}/writeups/${matched.meta.slug}`}/>
+      <h1 class="text-3xl font-semibold">{matched.meta.title}</h1>
+      <div class="muted">{matched.meta.date}</div>
+      <div class="mt-4">{/* Render Markdown content component */}
+        <Post />
+      </div>
+    </article>
+  ) : (
+    <div>
+      <h2 class="text-xl font-semibold">Not found</h2>
+      <p class="muted">The requested writeup could not be found.</p>
+    </div>
+  )}
+</Layout>

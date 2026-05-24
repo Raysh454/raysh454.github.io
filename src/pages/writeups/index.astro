@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { parseCustomWriteup } from '../../utils/markdown.js';
+
+// 1. Ingest all writeups modules
+const modules = import.meta.glob('../../../content/writeups/*.md', { eager: true });
+
+// 2. Map through entries, parse them globally, filter incomplete targets, and sort
+const pages = Object.entries(modules)
+  .map(([filePath, fileInstance]) => parseCustomWriteup(filePath, fileInstance))
+  .filter(p => !p.status.toLowerCase().includes('incomplete'))
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+---
+
+<Layout>
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-semibold mb-6">Writeups</h1>
+    <ul class="grid grid-cols-1 gap-4">
+      {pages.map(p => (
+        <li class="card rounded-xl p-5 group">
+          <a class="block" href={`/writeups/${p.slug}`}>
+            <div class="flex items-start justify-between gap-3">
+              <h2 class="text-xl font-semibold group-hover:text-accent transition-colors">
+                {p.title}
+              </h2>
+              {p.date && (
+                <span class="text-xs font-mono text-zinc-500 group-hover:text-accent/70 transition-colors">
+                  {p.date}
+                </span>
+              )}
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2 text-xs font-mono">
+              {p.status && (
+                <span class="px-2 py-1 rounded-full border border-white/5 text-zinc-400 group-hover:text-accent group-hover:border-accent/30 transition-colors">
+                  Status: {p.status}
+                </span>
+              )}
+              {p.platform && (
+                <span class="px-2 py-1 rounded-full border border-white/5 text-zinc-400 group-hover:text-accent group-hover:border-accent/30 transition-colors">
+                  Platform: {p.platform}
+                </span>
+              )}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Layout>
