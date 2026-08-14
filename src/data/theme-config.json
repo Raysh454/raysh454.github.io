@@ -1,6 +1,6 @@
 {
   "theme": "violet",
-  "bg": "grid",
+  "bg": "constellation",
   "_help": "Site-wide defaults. Set theme + bg to one of the options below, then commit & push — the deploy Action rebuilds and everyone's default updates. Keys starting with _ are documentation only and are ignored by the site.",
   "_theme_options": [
     "green",
