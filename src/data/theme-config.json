@@ -1,0 +1,24 @@
+{
+  "theme": "petrol",
+  "bg": "beams",
+  "_help": "Site-wide defaults. Set theme + bg to one of the options below, then commit & push — the deploy Action rebuilds and everyone's default updates. Keys starting with _ are documentation only and are ignored by the site.",
+  "_theme_options": [
+    "green",
+    "emerald",
+    "petrol",
+    "indigo",
+    "violet",
+    "amber",
+    "ember",
+    "crimson"
+  ],
+  "_bg_options": [
+    "mesh",
+    "aurora",
+    "beams",
+    "grid",
+    "grain",
+    "constellation",
+    "flat"
+  ]
+}

@@ -1,0 +1,132 @@
+---
+// Floating accent + background switcher. State lives in <html data-theme>
+// / <html data-bg> and persists to localStorage. The no-flash script in the
+// layout head applies the saved choice before first paint.
+const THEMES = [
+  { id: 'green',   color: '#00ff9d', label: 'Signal Green' },
+  { id: 'emerald', color: '#10b981', label: 'Emerald' },
+  { id: 'petrol',  color: '#38e1d4', label: 'Petrol' },
+  { id: 'indigo',  color: '#7c9cff', label: 'Indigo' },
+  { id: 'violet',  color: '#a855f7', label: 'Violet' },
+  { id: 'amber',   color: '#ffab3d', label: 'Amber' },
+  { id: 'ember',   color: '#e0623f', label: 'Ember' },
+  { id: 'crimson', color: '#f4523b', label: 'Crimson' },
+];
+const BACKGROUNDS = [
+  { id: 'mesh',          label: 'Mesh' },
+  { id: 'aurora',        label: 'Aurora' },
+  { id: 'beams',         label: 'Beams' },
+  { id: 'grid',          label: 'Grid' },
+  { id: 'grain',         label: 'Grain' },
+  { id: 'constellation', label: 'Nodes' },
+  { id: 'flat',          label: 'Flat' },
+];
+---
+
+<div class="theme-picker" id="theme-picker" data-open="false">
+  <div class="theme-panel" role="dialog" aria-label="Theme settings">
+    <div class="group">
+      <h4>Accent</h4>
+      <div class="swatch-row">
+        {THEMES.map(t => (
+          <button
+            type="button"
+            class="swatch"
+            data-set-theme={t.id}
+            style={`background:${t.color}`}
+            title={t.label}
+            aria-label={`Accent: ${t.label}`}
+          ></button>
+        ))}
+      </div>
+    </div>
+    <div class="group">
+      <h4>Background</h4>
+      <div class="bg-row">
+        {BACKGROUNDS.map(b => (
+          <button type="button" class="bg-opt" data-set-bg={b.id} aria-label={`Background: ${b.label}`}>
+            {b.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="theme-fab" id="theme-fab" aria-label="Customise theme" aria-expanded="false">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="13.5" cy="6.5" r="2.5"></circle>
+      <circle cx="19" cy="12" r="2.5"></circle>
+      <circle cx="6" cy="12" r="2.5"></circle>
+      <circle cx="10" cy="18" r="2.5"></circle>
+      <path d="M12 2a10 10 0 1 0 0 20c1 0 1.5-.7 1.5-1.5 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.3 0-.8.7-1.5 1.5-1.5H16a4 4 0 0 0 4-4c0-4.4-3.6-8-8-8z"></path>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const DEFAULTS = { theme: 'green', bg: 'mesh' };
+
+  function reflect() {
+    const root = document.documentElement;
+    const theme = root.dataset.theme || DEFAULTS.theme;
+    const bg = root.dataset.bg || DEFAULTS.bg;
+    document.querySelectorAll('[data-set-theme]').forEach((el) => {
+      el.setAttribute('aria-pressed', String(el.getAttribute('data-set-theme') === theme));
+    });
+    document.querySelectorAll('[data-set-bg]').forEach((el) => {
+      el.setAttribute('aria-pressed', String(el.getAttribute('data-set-bg') === bg));
+    });
+  }
+
+  function initThemePicker() {
+    if (!window.__themePickerBound) {
+      window.__themePickerBound = true;
+
+      document.addEventListener('click', (e) => {
+        const target = e.target instanceof Element ? e.target : null;
+        if (!target) return;
+
+        const fab = target.closest('#theme-fab');
+        if (fab) {
+          const picker = document.getElementById('theme-picker');
+          const open = picker.getAttribute('data-open') !== 'true';
+          picker.setAttribute('data-open', String(open));
+          fab.setAttribute('aria-expanded', String(open));
+          return;
+        }
+
+        const themeBtn = target.closest('[data-set-theme]');
+        if (themeBtn) {
+          const val = themeBtn.getAttribute('data-set-theme');
+          document.documentElement.dataset.theme = val;
+          try { localStorage.setItem('sb-theme', val); } catch {}
+          reflect();
+          return;
+        }
+
+        const bgBtn = target.closest('[data-set-bg]');
+        if (bgBtn) {
+          const val = bgBtn.getAttribute('data-set-bg');
+          document.documentElement.dataset.bg = val;
+          try { localStorage.setItem('sb-bg', val); } catch {}
+          reflect();
+          return;
+        }
+
+        // click outside → close
+        if (!target.closest('#theme-picker')) {
+          const picker = document.getElementById('theme-picker');
+          if (picker) {
+            picker.setAttribute('data-open', 'false');
+            const f = document.getElementById('theme-fab');
+            if (f) f.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+    }
+    reflect();
+  }
+
+  document.addEventListener('DOMContentLoaded', initThemePicker);
+  document.addEventListener('astro:page-load', initThemePicker);
+</script>
