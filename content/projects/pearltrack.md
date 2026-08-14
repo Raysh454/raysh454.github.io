@@ -3,6 +3,7 @@ title: "PearlTrack"
 date: "2026-04-24"
 summary: "PearlTrack is a starter full-stack task management system built with ASP.NET Core 10, React, Entity Framework Core, SQL Server, Serilog, and xUnit."
 repo: "https://github.com/Raysh454/PearlTrack"
+tech: ["ASP.NET Core 10", "React", "EF Core", "SQL Server", "xUnit"]
 ---
 
 # PearlTrack

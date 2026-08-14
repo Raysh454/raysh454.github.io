@@ -11,11 +11,15 @@ IP: 10.10.11.80
 # Editor
 # Summary
 
-- Placeholder
+Editor is an easy Linux machine. An XWiki instance on port 8080 is vulnerable to unauthenticated remote code execution (CVE-2025-24893), which is exploited to gain a shell as the `xwiki` user. The database password stored in `hibernate.cfg.xml` is reused, allowing SSH access as `oliver`. Oliver's membership of the `netdata` group is then abused through a vulnerable `ndsudo` helper — hijacking the `PATH` to a malicious `nvme` binary — to execute code as root.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- Python
+- wget
+- gcc
+- SSH
  
 ---
 

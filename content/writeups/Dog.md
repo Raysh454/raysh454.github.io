@@ -8,7 +8,11 @@ Status: Complete
 IP: 10.10.11.58
 ```
 
- 
+# Dog
+# Summary
+
+Dog is an easy Linux machine. An exposed `.git` directory is dumped with git-dumper, revealing Backdrop CMS database credentials in `settings.php`. Enumerating the CMS identifies the valid user `tiffany`, whose reused password grants admin access. A malicious module is uploaded to gain code execution as `www-data`, and the same password is reused once more to SSH in as `johncusack`. Finally, `sudo` access to the Backdrop `bee` CLI tool allows arbitrary PHP evaluation as root.
+
 ---
 
 # Information Gathering

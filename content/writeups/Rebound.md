@@ -11,11 +11,19 @@ IP: 10.129.229.114
 # Rebound
 # Summary
 
-- Placeholder
+Rebound is an insane difficulty Windows Active Directory machine. Guest SMB access and a RID brute force enumerate domain users, and `GetUserSPNs` with the `-no-preauth` flag abuses an account with Kerberos pre-authentication disabled to request service tickets, one of which (`ldap_monitor`) is cracked. Password spraying reveals reuse by `oorend`, who can add himself to the `ServiceMGMT` group; abusing ACL inheritance on the Service Users OU with bloodyAD grants control of `winrm_svc`, whose access is obtained through either a password reset or a stealthier shadow-credentials (msDS-KeyCredentialLink) attack.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- NetExec
+- Kerbrute
+- Impacket (GetUserSPNs, getTGT)
+- hashcat
+- bloodyAD
+- pyWhisker
+- PKINITtools
+- evil-winrm
  
 ---
 

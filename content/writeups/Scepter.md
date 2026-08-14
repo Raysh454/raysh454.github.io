@@ -11,7 +11,7 @@ IP: 10.10.11.65
 # Scepter
 # Summary
 
-- Placeholder
+Scepter is a hard difficulty Windows Active Directory machine focused on ADCS certificate mapping. An exported NFS share exposes password-protected PFX certificates whose password is cracked with crackpkcs12, granting `d.baker` access via PKINIT. A chain of ACL abuses (ForceChangePassword, then GenericAll over an OU) sets up an ESC14 attack: by writing a matching `mail` attribute against targets that hold an `X509RFC822` entry in `altSecurityIdentities`, certificates are enrolled to impersonate `h.brown` and then `p.adams`. With `p.adams`, the NTDS database is dumped with secretsdump to recover the Administrator hash.
 
 # Lessons Learnt
 

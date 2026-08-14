@@ -3,6 +3,7 @@ title: "Log_Predictor"
 date: "2025-12-27"
 summary: "Log_Predictor is a Python project that demonstrates neural network approaches (both manual and PyTorch implementations) for approximating the base-10 logarithm (log10(x)) of numeric inputs."
 repo: "https://github.com/Raysh454/Log_Predictor"
+tech: ["Python", "PyTorch", "Neural Networks"]
 ---
 
 # Log_Predictor

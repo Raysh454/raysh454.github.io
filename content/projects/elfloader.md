@@ -3,6 +3,7 @@ title: "ElfLoader"
 date: "2024-08-01"
 summary: "A simple ELFLoader I wrote to learn about how linux executes binaries"
 repo: "https://github.com/Raysh454/ElfLoader"
+tech: ["C", "Linux", "ELF", "Systems"]
 ---
 
 # ElfLoader

@@ -2,7 +2,7 @@
 Alias: Chemistry
 Date: 20-10_2024
 Platform: Hackthebox
-OS: Windows
+OS: Linux
 Difficulty: Easy
 Status: Complete
 IP: 10.10.11.38
@@ -11,7 +11,7 @@ IP: 10.10.11.38
 # Chemistry
 # Summary
 
-- Placeholder
+Chemistry is an easy Linux machine. A Flask application accepts CIF crystallographic files, and the `pymatgen` library used to parse them is vulnerable to arbitrary code execution, giving a shell as the `app` user. A local SQLite database yields password hashes, one of which (`rosa`) is cracked with hashcat. An internal service on port 8080 running `aiohttp 3.9.1` is reached via a chisel tunnel and exploited with a path-traversal vulnerability to read root's private SSH key, granting root access.
 
 ---
 

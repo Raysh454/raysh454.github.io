@@ -11,11 +11,17 @@ IP: 10.10.11.64
 # Nocturnal
 # Summary
 
-- Placeholder
+Nocturnal is an easy Linux machine. A file-upload feature leaks other users' files through a `username` parameter, enabling enumeration with ffuf and the discovery of a document containing the `amanda` admin password. The admin panel's backup functionality is vulnerable to command injection — bypassing its blacklist with tab (`%09`) and newline (`%0a`) characters — for a shell as `www-data`. A hash from the application database is cracked to SSH in as `tobias`, and an internal ISPConfig instance (reached via chisel) is exploited with CVE-2023-46818 to gain root.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- ffuf
+- Burp Suite
+- chisel
+- hashcat
+- Netcat
+- SSH
  
 ---
 

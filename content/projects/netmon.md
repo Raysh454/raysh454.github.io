@@ -1,8 +1,10 @@
 ---
 title: "NetMon"
 date: "2024-12-25"
-summary: "NetMon Monitors System Information for multiple devices."
+summary: "Three-tier network monitoring and threat-intelligence tool doing continuous TCP/IP stack analysis across concurrent endpoints, for real-time asset visibility and post-incident forensic reconstruction."
 repo: "https://github.com/Raysh454/NetMon"
+featured: true
+tech: ["C++", "Linux", "TCP/IP", "Sockets"]
 ---
 
 # NetMon

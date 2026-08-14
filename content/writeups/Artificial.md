@@ -11,11 +11,17 @@ IP: 10.10.11.74
 # Artificial
 # Summary
 
-- Placeholder
+Artificial is an easy Linux machine built around insecure machine-learning model loading. The web application accepts uploaded Keras `.h5` models, which execute arbitrary code through a malicious Lambda layer when the model is loaded, granting a foothold. A SQLite database yields an MD5 hash that is cracked to SSH in as `gael`. Locally, a Backrest (restic) instance listening on port 9898 is reached through a chisel tunnel; its configuration backup leaks the JWT secret, allowing an authentication token to be forged (the bcrypt hash can also be cracked). A Backrest repository hook is then abused to execute a command as root.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- Python (Keras / TensorFlow)
+- chisel
+- PyJWT
+- hashcat
+- Netcat
+- SSH
  
 ---
 

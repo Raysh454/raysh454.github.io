@@ -11,11 +11,12 @@ IP: 10.10.10.3
 # Lame
 # Summary
 
-- Placeholder
+Lame is an easy Linux machine and one of the oldest on HackTheBox. The Samba service (version 3.0.20) is vulnerable to command injection via the username field — the `usermap_script` flaw — which is exploited directly with Metasploit to obtain a root shell.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- Metasploit
  
 ---
 

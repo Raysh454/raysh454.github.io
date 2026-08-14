@@ -11,7 +11,7 @@ IP: 10.10.11.67
 # Environment
 # Summary
 
-What a pain
+Environment is a medium difficulty Linux machine. A Laravel application leaks its debug page, revealing a development-only code path that logs an attacker in directly when the application environment is set to `preprod`; this is triggered via CVE-2024-52301 by injecting `--env=preprod`. An authenticated file-upload flaw then yields a shell as `www-data`. A GPG keyvault in a user's home directory is decrypted to recover the password for `hish`, who may run `systeminfo` via sudo while keeping the `BASH_ENV` variable — causing an attacker-controlled script to be sourced as root.
 
 ---
 

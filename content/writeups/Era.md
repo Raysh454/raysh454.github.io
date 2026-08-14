@@ -11,11 +11,16 @@ IP: 10.129.136.212
 # Era
 # Summary
 
-- Placeholder
+Era is a medium difficulty Linux machine. A file-hosting subdomain allows registration, and an IDOR in `download.php` exposes a site backup and a private key. The application's `ssh2://` PHP wrapper is enabled, allowing command execution through the `format` parameter and a foothold as `yuri`. Credentials cracked from the backup's SQLite database allow a switch to `eric`. For root, a periodically executed `monitor` binary in `/opt/AV/periodic-checks` validates a signed `.text` section; using the leaked signing key, a malicious reverse-shell binary is signed with OpenSSL and `objcopy` to pass the check and execute as root.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- pspy
+- OpenSSL
+- objcopy
+- Netcat
+- SSH
  
 ---
 

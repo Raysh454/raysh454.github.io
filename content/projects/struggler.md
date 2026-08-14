@@ -1,8 +1,12 @@
 ---
-title: "struggler"
+title: "Struggler: The Architect's Trial"
+slug: "struggler"
 date: "2026-05-19"
-summary: "A 2D platformer"
+summary: "Hackathon-winning 2D platformer where an adversarial AI agent designs every level against you — generating layouts, hazards and difficulty from your own telemetry."
 repo: "https://github.com/Raysh454/struggler"
+featured: true
+award: "1st Place — AI Seekho National Hackathon 2026"
+tech: ["Flutter", "Dart", "Flame Engine", "Gemini 2.5 Flash", "Cloud Functions"]
 ---
 
 # STRUGGLER: The Architect's Trial

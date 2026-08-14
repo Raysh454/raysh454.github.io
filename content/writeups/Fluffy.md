@@ -11,7 +11,7 @@ IP: 10.10.11.69
 # Fluffy
 # Summary
 
-- Pretty hard for an easy machine
+Fluffy is an easy difficulty Windows Active Directory machine that starts with credentials for a low-privileged account — though it is rather involved for an easy box. Write access to an SMB share is abused with a crafted `.library-ms` file (CVE-2025-24071) to coerce a user into authenticating to an attacker-controlled SMB server, capturing and cracking the NetNTLM hash for `p.agila`. Group membership and bloodyAD shadow-credential attacks then move laterally through `winrm_svc` and `ca_svc`. Finally, Certipy abuses a CA configured without the security extension: `ca_svc`'s UPN is switched to Administrator, a certificate is requested, and it is used to authenticate as the domain administrator.
 
 # Lessons Learnt
 

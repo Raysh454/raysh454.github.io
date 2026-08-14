@@ -8,6 +8,11 @@ Status: Complete
 IP: 10.129.248.24
 ```
 
+# Mantis
+# Summary
+
+Mantis is a hard difficulty Windows Active Directory machine. A hidden `secure_notes` directory on an IIS site leaks a filename that decodes to the MSSQL `sa` password. Querying the OrchardCMS database recovers credentials for the user `james`. The domain controller (Windows Server 2008 R2) is vulnerable to MS14-068, so a forged Kerberos ticket is generated with PyKEK and used with Impacket's `goldenPac` to obtain a privileged shell as domain administrator.
+
 ---
 
 # Information Gathering

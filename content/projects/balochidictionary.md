@@ -3,6 +3,7 @@ title: "BalochiDictionary"
 date: "2025-05-24"
 summary: "Balochi Dictionary made using Go and Wails"
 repo: "https://github.com/Raysh454/BalochiDictionary"
+tech: ["Go", "Wails", "Desktop"]
 ---
 
 # Balochi Dictionary

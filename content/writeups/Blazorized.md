@@ -11,11 +11,14 @@ IP: 10.10.11.22
 # Blazorized
 # Summary
 
-- Placeholder
+Blazorized is a medium difficulty Windows machine featuring a Blazor WebAssembly application. Downloading `Blazorized.Helpers.dll` from the front end and decompiling it with ILSpy reveals the secret key used to sign JWTs, allowing an administrator token to be forged for the admin subdomain. The admin panel is then vulnerable to SQL injection via stacked queries, which is used to enable `xp_cmdshell` and obtain a reverse shell as `nu_1055`.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- ILSpy
+- dotnet
+- impacket-smbserver
  
 ---
 

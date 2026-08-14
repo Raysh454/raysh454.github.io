@@ -3,6 +3,7 @@ title: "ChatApp"
 date: "2024-01-14"
 summary: "A Python-based client-server chat application with a modern PyQt6 graphical user interface, real-time messaging, and basic account management."
 repo: "https://github.com/Raysh454/ChatApp"
+tech: ["Python", "PyQt6", "Sockets"]
 ---
 
 # ChatApp

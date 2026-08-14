@@ -11,11 +11,17 @@ IP: 10.10.10.139
 # Ellingson
 # Summary
 
-- Placeholder
+Ellingson is a hard Linux machine. A Flask application exposes a debug console that allows arbitrary Python execution, yielding a foothold as `hal`. Membership of the `adm` group grants read access to `/var/backup/shadow.bak`, whose hashes are cracked with John to recover credentials for `margo`. Privilege escalation requires binary exploitation of the setuid binary `garbage`, which is vulnerable to a buffer overflow via `gets`. With a non-executable stack, a Return-Oriented Programming chain is built to call `setuid(0)` and spawn a root shell.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- John the Ripper
+- Ghidra
+- GDB / pwndbg
+- pwntools
+- Netcat
+- SSH
  
 ---
 

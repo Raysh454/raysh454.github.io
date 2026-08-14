@@ -9,6 +9,10 @@ IP: 10.10.11.61
 ```
 
 # Haze
+# Summary
+
+Haze is a hard difficulty Windows Active Directory machine. A Splunk instance is vulnerable to an LFI (CVE-2024-36991), used to read `splunk.secret` and `authentication.conf` and decrypt the stored LDAP password; password spraying then identifies `paul.taylor` and, through RID brute forcing, `mark.adams`, who can WinRM in. Abusing the `GMSA_Managers` group retrieves the `Haze-IT-Backup$` gMSA password, which is used to take over the `SUPPORT_SERVICES` group and perform a shadow-credentials attack against `edward.martin`. A Splunk backup then yields the admin password, and a malicious Splunk app plus a PrintSpoofer (SeImpersonatePrivilege) abuse escalate to SYSTEM.
+
 # Lessons Learnt
 
 - Re-Enumerate after every new foothold/user.

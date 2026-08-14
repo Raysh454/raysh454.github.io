@@ -1,72 +1,232 @@
 ---
-import Footer from '../components/Footer.jsx'
 import Layout from '../layouts/Layout.astro';
----
-<Layout>
-  <article class="max-w-4xl mx-auto px-4 py-8">
-    <div class="mb-10">
-      <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-2">About Me</h1>
-      <div class="w-16 h-1 bg-accent rounded-full"></div>
-    </div>
+import site from '../data/site.json';
+import { getStats } from '../utils/content.js';
 
-    <div class="cyber-card p-5 rounded-2xl border border-white/5 bg-zinc-950/50 backdrop-blur-md shadow-2xl font-mono text-sm mb-8">
-      {/* Terminal Header */}
-      <div class="flex items-center gap-3 mb-6 border-b border-white/5 pb-3">
-        <div class="flex gap-2">
-          <div class="w-3 h-3 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.4)]"></div>
-          <div class="w-3 h-3 rounded-full bg-yellow-500/80 shadow-[0_0_8px_rgba(234,179,8,0.4)]"></div>
-          <div class="w-3 h-3 rounded-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+const stats = getStats();
+const { author } = site;
+
+const experience = [
+  {
+    role: '.NET Developer Intern',
+    company: 'Quanrio LLP',
+    location: 'Karachi',
+    period: 'Aug 2026 — Present',
+    current: true,
+    points: [
+      'Own end-to-end delivery of client-facing features in ASP.NET Core, from requirements handoff through deployment, coordinating daily with a team lead across Agile sprints.'
+    ]
+  },
+  {
+    role: '.NET + React Developer Intern',
+    company: '10Pearls',
+    location: 'Karachi',
+    period: 'May 2026 — Jun 2026',
+    current: false,
+    points: [
+      'Shipped production features in ASP.NET Core and React across Agile sprints, including API authentication flows and environment-segregated configuration management.',
+      'Hardened ASP.NET Core and React codebases against OWASP Top 10 risks through input validation and secure authentication patterns.',
+      'Contributed to secure SDLC code reviews, reducing insecure coding patterns across the deployment pipeline.'
+    ]
+  }
+];
+
+const skills = [
+  { label: 'Languages', items: ['C#', 'Go', 'Python', 'C / C++', 'JavaScript', 'Dart', 'SQL', 'Bash'] },
+  { label: 'Frameworks', items: ['.NET / ASP.NET Core', 'React', 'Flutter', 'Flame', 'MediatR', 'EF Core'] },
+  { label: 'Security', items: ['Burp Suite', 'OWASP ZAP', 'Metasploit', 'Nmap', 'Nessus', 'Wireshark', 'Kali Linux'] },
+  { label: 'Domains', items: ['Web App Security', 'Penetration Testing', 'Active Directory Attacks', 'Network Security', 'Malware Analysis', 'Digital Forensics'] },
+  { label: 'Cloud & DevOps', items: ['Docker', 'GitHub Actions', 'RabbitMQ', 'Testcontainers', 'Google Cloud Functions'] },
+  { label: 'Databases', items: ['SQL Server', 'MySQL', 'SQLite3'] }
+];
+
+const certifications = [
+  {
+    name: 'Google Cybersecurity Professional Certificate',
+    issuer: 'Coursera',
+    detail: 'Foundations of Cybersecurity · Manage Security Risks · Networks and Network Security · Linux and SQL · Assets, Threats, and Vulnerabilities'
+  },
+  {
+    name: 'Databases and SQL for Data Science with Python',
+    issuer: 'IBM · Coursera',
+    detail: null
+  }
+];
+---
+
+<Layout title="About" description="Software engineer and security researcher based in Karachi. National hackathon winner, .NET developer, and author of 59 published attack-chain writeups.">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+
+    {/* ============ HEADER ============ */}
+    <header class="mb-14" data-reveal>
+      <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight">About</h1>
+      <div class="w-16 h-1 bg-accent rounded-full mt-3 mb-6"></div>
+      <p class="text-lg text-zinc-300 leading-relaxed max-w-2xl">
+        I'm a software engineer and security researcher based in {author.location}. I build
+        secure backends and low-level systems tooling in C#, Go and C — and I spend the other
+        half of my time taking systems like them apart.
+      </p>
+      <p class="mt-4 text-zinc-400 leading-relaxed max-w-2xl">
+        That second half isn't a hobby bolted onto the first. Writing a privilege-escalation
+        exploit from scratch, or documenting {stats.activeDirectory} Active Directory kill chains,
+        is what makes the code I ship harder to attack.
+      </p>
+    </header>
+
+    {/* ============ AWARD ============ */}
+    <section class="mb-14" data-reveal>
+      <div class="award-banner rounded-2xl p-6 md:p-8">
+        <div class="flex items-start gap-4">
+          <span class="text-3xl leading-none" aria-hidden="true">🏆</span>
+          <div>
+            <h2 class="text-xl md:text-2xl font-bold text-white leading-snug">
+              1st Place — AI Seekho National Hackathon 2026
+            </h2>
+            <p class="mt-2 text-sm text-zinc-300 leading-relaxed">
+              Selected first out of <strong class="text-white">10,000+ participants</strong> across
+              2,700+ teams — roughly 40% of them industry professionals. Sponsored by Google,
+              Telenor, Innovista and Pakistan's Ministry of IT &amp; Telecommunication.
+              Prize: <strong class="text-white">PKR 1,000,000</strong>.
+            </p>
+            <p class="mt-3 text-sm text-zinc-400 leading-relaxed">
+              The winning entry was <em class="text-zinc-300">Struggler: The Architect's Trial</em> — a
+              platformer whose levels are designed against you in real time by an adversarial AI agent,
+              backed by a solver that guarantees every generated level is actually beatable.
+            </p>
+            <a href="/projects/struggler" class="link-arrow inline-block mt-4">
+              Read how it works
+            </a>
+          </div>
         </div>
-        <span class="text-xs text-zinc-500 flex-1 text-center pr-8">guest@system:~</span>
+      </div>
+    </section>
+
+    {/* ============ EXPERIENCE ============ */}
+    <section class="mb-14">
+      <h2 class="section-title mb-6" data-reveal>Experience</h2>
+      <div class="space-y-4">
+        {experience.map((job, i) => (
+          <div class="card rounded-2xl p-6" data-reveal data-reveal-delay={i}>
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1">
+              <h3 class="text-lg font-bold text-white">{job.role}</h3>
+              <span class="font-mono text-xs text-zinc-500 shrink-0">{job.period}</span>
+            </div>
+            <div class="flex items-center gap-2 mb-4">
+              <span class="text-sm font-semibold text-accent">{job.company}</span>
+              <span class="text-zinc-700">·</span>
+              <span class="text-sm text-zinc-500">{job.location}</span>
+              {job.current && (
+                <span class="ml-1 flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-accent">
+                  <span class="online-dot"></span>
+                </span>
+              )}
+            </div>
+            <ul class="space-y-2.5">
+              {job.points.map(point => (
+                <li class="flex gap-3 text-sm text-zinc-400 leading-relaxed">
+                  <span class="text-accent/50 mt-1.5 shrink-0" aria-hidden="true">▹</span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* ============ SECURITY RESEARCH ============ */}
+    <section class="mb-14">
+      <h2 class="section-title mb-2" data-reveal>Security research</h2>
+      <p class="section-subtitle mb-6" data-reveal>HackTheBox &amp; TryHackMe · 2022 — present</p>
+
+      <div class="card rounded-2xl p-6" data-reveal>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+          <div class="card-inner">
+            <span class="stat-number">80+</span>
+            <span class="stat-label">Machines owned</span>
+          </div>
+          <div class="card-inner">
+            <span class="stat-number">{stats.writeups}</span>
+            <span class="stat-label">Writeups published</span>
+          </div>
+          <div class="card-inner">
+            <span class="stat-number">{stats.activeDirectory}</span>
+            <span class="stat-label">AD chains</span>
+          </div>
+          <div class="card-inner">
+            <span class="stat-number">{stats.hardOrAbove}</span>
+            <span class="stat-label">Hard / Insane</span>
+          </div>
+        </div>
+
+        <ul class="space-y-2.5">
+          <li class="flex gap-3 text-sm text-zinc-400 leading-relaxed">
+            <span class="text-accent/50 mt-1.5 shrink-0" aria-hidden="true">▹</span>
+            <span>Compromised 80+ machines across HackTheBox and TryHackMe, documenting the full kill chain each time — reconnaissance through post-exploitation artifact analysis.</span>
+          </li>
+          <li class="flex gap-3 text-sm text-zinc-400 leading-relaxed">
+            <span class="text-accent/50 mt-1.5 shrink-0" aria-hidden="true">▹</span>
+            <span>Applied Active Directory attack techniques in enterprise lab environments: Kerberoasting, Pass-the-Hash, DCSync and LDAP enumeration.</span>
+          </li>
+          <li class="flex gap-3 text-sm text-zinc-400 leading-relaxed">
+            <span class="text-accent/50 mt-1.5 shrink-0" aria-hidden="true">▹</span>
+            <span>Tested web applications for SQLi, XSS, IDOR, SSRF and broken access control, mapping findings to CVE/CWE classifications.</span>
+          </li>
+          <li class="flex gap-3 text-sm text-zinc-400 leading-relaxed">
+            <span class="text-accent/50 mt-1.5 shrink-0" aria-hidden="true">▹</span>
+            <span>Performed post-exploitation malware analysis on compromised Windows hosts — dropped payloads, persistence mechanisms and C2 beaconing behaviour.</span>
+          </li>
+        </ul>
+
+        <a href="/writeups" class="link-arrow inline-block mt-6">Read the writeups</a>
+      </div>
+    </section>
+
+    {/* ============ EDUCATION + CERTS ============ */}
+    <section class="mb-14 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="card rounded-2xl p-6" data-reveal>
+        <h2 class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-4">Education</h2>
+        <h3 class="font-bold text-white">B.S. Computer Science</h3>
+        <p class="text-sm text-accent font-semibold mt-1">DHA Suffa University</p>
+        <div class="flex items-center gap-2 mt-3 font-mono text-xs text-zinc-500">
+          <span>Graduated Jul 2026</span>
+          <span class="text-zinc-700">·</span>
+          <span>GPA <span class="text-zinc-300 font-semibold">3.68 / 4.0</span></span>
+        </div>
       </div>
 
-      {/* Terminal Body */}
-      <div class="text-zinc-300 space-y-8">
-        {/* Bio Command */}
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <span class="text-accent font-bold">~</span>
-            <span class="text-zinc-500">$</span>
-            <span class="text-zinc-100">cat system/bio.md</span>
-          </div>
-          <p class="text-zinc-400 leading-relaxed pl-4 border-l-2 border-white/5">
-            A software engineer and security researcher specializing in application hardening 
-            and native performance optimization. I build cross-platform tools and secure 
-            ingestion pipelines, focusing on eliminating application vulnerabilities at the 
-            parser level without sacrificing execution velocity.
-          </p>
-        </div>
+      <div class="card rounded-2xl p-6" data-reveal data-reveal-delay="1">
+        <h2 class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-4">Certifications</h2>
+        <ul class="space-y-4">
+          {certifications.map(cert => (
+            <li>
+              <h3 class="text-sm font-bold text-white leading-snug">{cert.name}</h3>
+              <p class="text-xs text-zinc-500 mt-0.5">{cert.issuer}</p>
+              {cert.detail && (
+                <p class="text-[11px] text-zinc-600 mt-1.5 leading-relaxed">{cert.detail}</p>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
 
-        {/* Experience Command */}
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <span class="text-accent font-bold">~</span>
-            <span class="text-zinc-500">$</span>
-            <span class="text-zinc-100">cat system/experience.md</span>
-          </div>
-          <div class="pl-4 border-l-2 border-white/5 space-y-4">
-            <div>
-              <h3 class="text-white font-bold text-base mb-1"># 10Pearls .NET / React Fullstack Intern</h3>
-              <p class="text-zinc-400 leading-relaxed">
-                Assisted in the development and maintenance of scalable web applications using .NET Core and React. 
-                Collaborated with senior engineers to optimize database queries, implement responsive front-end interfaces, 
-                and resolve critical bugs during the development lifecycle.
-              </p>
+    {/* ============ SKILLS ============ */}
+    <section data-reveal>
+      <h2 class="section-title mb-6">Toolkit</h2>
+      <div class="space-y-5">
+        {skills.map(group => (
+          <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-5">
+            <h3 class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 sm:w-32 shrink-0 sm:text-right sm:pt-2">
+              {group.label}
+            </h3>
+            <div class="flex flex-wrap gap-1.5">
+              {group.items.map(item => <span class="tech-pill">{item}</span>)}
             </div>
           </div>
-        </div>
-        
-        {/* Blinking Cursor */}
-        <div class="flex items-center gap-2 pt-4">
-          <span class="text-accent font-bold">~</span>
-          <span class="text-zinc-500">$</span>
-          <span class="w-2.5 h-4 bg-accent/80 animate-pulse inline-block"></span>
-        </div>
-          {/* Card Footer */}
-          <div class="text-center pt-2">
-              <Footer>
-          </div>
+        ))}
       </div>
-    </div>
-  </article>
+    </section>
+
+  </div>
 </Layout>

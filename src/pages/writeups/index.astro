@@ -1,54 +1,82 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Footer from '../../components/Footer.jsx'
-import { parseCustomWriteup } from '../../utils/markdown.js';
+import { getWriteups, getStats } from '../../utils/content.js';
 
-// 1. Ingest all writeups modules
-const modules = import.meta.glob('../../../content/writeups/*.md', { eager: true });
+const writeups = getWriteups();
+const stats = getStats();
 
-// 2. Map through entries, parse them globally, filter incomplete targets, and sort
-const pages = Object.entries(modules)
-  .map(([filePath, fileInstance]) => parseCustomWriteup(filePath, fileInstance))
-  .filter(p => !p.status.toLowerCase().includes('incomplete'))
-  .sort((a, b) => new Date(b.date) - new Date(a.date));
+const difficultyClass = {
+  Easy: 'text-accent bg-accent/10 border-accent/20',
+  Medium: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
+  Hard: 'text-rose-500 bg-rose-500/10 border-rose-500/20',
+  Insane: 'text-violet-400 bg-violet-400/10 border-violet-400/20'
+};
 ---
 
-<Layout>
-  <div class="max-w-4xl mx-auto">
-    <h1 class="text-3xl font-semibold mb-6">Writeups</h1>
-    <ul class="grid grid-cols-1 gap-4">
-      {pages.map(p => (
-        <li class="card rounded-xl p-5 group">
-          <a class="block" href={`/writeups/${p.slug}`}>
-            <div class="flex items-start justify-between gap-3">
-              <h2 class="text-xl font-semibold group-hover:text-accent transition-colors">
-                {p.title}
-              </h2>
-              {p.date && (
-                <span class="text-xs font-mono text-zinc-500 group-hover:text-accent/70 transition-colors">
-                  {p.date}
-                </span>
-              )}
-            </div>
-            <div class="mt-3 flex flex-wrap gap-2 text-xs font-mono">
-              {p.status && (
-                <span class="px-2 py-1 rounded-full border border-white/5 text-zinc-400 group-hover:text-accent group-hover:border-accent/30 transition-colors">
-                  Status: {p.status}
-                </span>
-              )}
-              {p.platform && (
-                <span class="px-2 py-1 rounded-full border border-white/5 text-zinc-400 group-hover:text-accent group-hover:border-accent/30 transition-colors">
-                  Platform: {p.platform}
-                </span>
-              )}
-            </div>
+<Layout title="Writeups" description="Full attack-chain writeups from HackTheBox — reconnaissance through privilege escalation and post-exploitation.">
+  <div class="max-w-5xl mx-auto px-4 py-8">
+
+    <header class="mb-10" data-reveal>
+      <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight">Writeups</h1>
+      <div class="w-16 h-1 bg-accent rounded-full mt-3 mb-5"></div>
+      <p class="text-zinc-400 max-w-2xl leading-relaxed">
+        Full kill chains — reconnaissance, enumeration, exploitation, privilege escalation and
+        post-exploitation artifact analysis on Windows and Linux targets.
+      </p>
+
+      <div class="flex flex-wrap gap-x-6 gap-y-2 mt-6 font-mono text-xs text-zinc-500">
+        <span><span class="text-accent font-bold">{stats.writeups}</span> published</span>
+        <span><span class="text-accent font-bold">{stats.activeDirectory}</span> Active Directory chains</span>
+        <span><span class="text-accent font-bold">{stats.hardOrAbove}</span> Hard / Insane</span>
+        <span><span class="text-accent font-bold">{stats.byOs.Windows}</span> Windows · <span class="text-accent font-bold">{stats.byOs.Linux}</span> Linux</span>
+      </div>
+    </header>
+
+    <ul class="divide-y divide-white/5 border-y border-white/5">
+      {writeups.map((writeup, i) => (
+        <li data-reveal data-reveal-delay={Math.min(i, 5)}>
+          <a
+            href={`/writeups/${writeup.slug}`}
+            class="group flex flex-wrap items-center gap-x-4 gap-y-2 py-4 px-3 -mx-3 rounded-lg hover:bg-white/[0.03] transition-colors"
+          >
+            <span class="font-mono text-xs text-zinc-700 w-7 shrink-0 tabular-nums">
+              {String(writeups.length - i).padStart(2, '0')}
+            </span>
+
+            <span class="font-semibold text-zinc-100 group-hover:text-accent transition-colors grow min-w-0 truncate">
+              {writeup.title}
+            </span>
+
+            {writeup.isActiveDirectory && (
+              <span class="shrink-0 text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-sky-400/10 text-sky-400 border border-sky-400/20">
+                AD
+              </span>
+            )}
+
+            {writeup.os && (
+              <span class="shrink-0 hidden sm:flex items-center gap-1.5 font-mono text-[11px] text-zinc-500 w-20">
+                {writeup.os.toLowerCase().includes('win') ? (
+                  <svg class="w-3 h-3 text-sky-400" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.45H0V3.449zM0 12.45h9.75v9.45L0 20.551v-8.1zM10.8 1.95L24 0v11.55H10.8V1.95zM10.8 12.45H24v11.55l-13.2-1.95v-9.6z"/></svg>
+                ) : (
+                  <svg class="w-3 h-3 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 7v10M7 12h10"/></svg>
+                )}
+                {writeup.os}
+              </span>
+            )}
+
+            {writeup.difficulty && (
+              <span class={`shrink-0 text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border w-16 text-center ${difficultyClass[writeup.difficulty] ?? 'text-zinc-400 bg-white/5 border-white/10'}`}>
+                {writeup.difficulty}
+              </span>
+            )}
+
+            <span class="shrink-0 hidden md:inline font-mono text-xs text-zinc-600 w-24 text-right">
+              {writeup.dateDisplay}
+            </span>
           </a>
         </li>
       ))}
-      {/* Card Footer */}
-      <div class="text-center pt-2">
-          <Footer>
-      </div>
     </ul>
+
   </div>
 </Layout>

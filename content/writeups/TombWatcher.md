@@ -11,7 +11,7 @@ IP: 10.129.207.221
 # TombWatcher
 # Summary
 
-- Placeholder
+TombWatcher is a medium difficulty Windows Active Directory machine that begins with low-privileged credentials. A targeted Kerberoast recovers the password for `alfred`, who is added to a group able to read the `ANSIBLE_DEV$` gMSA password. A chain of ownership and shadow-credential abuses with bloodyAD moves through `sam` and `john`. A deleted `cert_admin` account is restored from the AD recycle bin, and inherited GenericAll over the ADCS OU enables a shadow-credential attack against it. Certipy then exploits an ESC15 (application-policies) template to issue a certificate as the Administrator and reset the account for full domain compromise.
 
 # Lessons Learnt
 

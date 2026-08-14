@@ -11,11 +11,17 @@ IP: 10.10.10.94
 # Reddish
 # Summary
 
-- Placeholder
+Reddish is an insane difficulty Linux machine centred on pivoting through Docker networks. A full port scan with masscan reveals Node-RED on port 1880, whose `exec` node is abused for a foothold. From there, chisel and proxychains are used to pivot across internal `172.x` networks: a Redis instance is abused to write a PHP web shell onto a mounted web directory, and a chain of chisel tunnels relays a reverse shell back through the Node-RED host. A root-run `rsync` backup script with a wildcard is then abused, and finally an rsync-writable cron directory is used to execute code as root before mounting the host filesystem.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- masscan
+- chisel
+- proxychains
+- redis-cli
+- Netcat
+- rsync
  
 ---
 

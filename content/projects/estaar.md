@@ -1,8 +1,10 @@
 ---
 title: "Estaar"
 date: "2025-03-15"
-summary: "Estaar is a micro web framework written in C#"
+summary: "A micro web framework in C#, built from the transport layer up — including its own lightweight HTTP server, routing and request pipeline."
 repo: "https://github.com/Raysh454/Estaar"
+featured: true
+tech: ["C#", ".NET", "HTTP", "Sockets"]
 ---
 
 # Estaar

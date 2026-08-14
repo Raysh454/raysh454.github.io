@@ -11,11 +11,13 @@ IP: 10.10.11.62
 # Code
 # Summary
 
-- Placeholder
+Code is an easy Linux machine. Port 5000 hosts an online Python interpreter that blacklists keywords such as `import`; the filter is bypassed with simple string manipulation to obtain a reverse shell. A downloaded SQLite database contains a hash that is quickly cracked, allowing SSH access as `martin`. `martin` may run a `backy.sh` backup script as root, whose weak `../` sanitisation is defeated with a `....//` payload to archive the `/root` directory and recover the root flag.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- hashcat
+- SSH
  
 ---
 

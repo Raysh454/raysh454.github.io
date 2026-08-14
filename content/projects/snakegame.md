@@ -3,6 +3,7 @@ title: "SnakeGame"
 date: "2022-12-25"
 summary: "This project showcases a Snake game developed using the SDL2 library in C"
 repo: "https://github.com/Raysh454/SnakeGame"
+tech: ["C", "SDL2"]
 ---
 
 # Snake Game with SDL2 in C

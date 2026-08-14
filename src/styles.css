@@ -34,6 +34,155 @@
   }
 }
 
+/* ==========================================
+   Component layer
+   `btn-primary`, `card-inner` and `muted` were referenced across the pages but
+   never defined, so those elements rendered unstyled. Defined here.
+   ========================================== */
+
+.muted {
+  color: var(--color-muted);
+}
+
+/* --- Buttons --- */
+.btn-primary,
+.btn-secondary,
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #030303;
+  border: 1px solid var(--color-accent);
+  box-shadow: 0 4px 20px rgba(0, 255, 157, 0.15);
+}
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  box-shadow: 0 6px 28px rgba(0, 255, 157, 0.3);
+  transform: translateY(-2px);
+}
+.btn-primary svg {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary:hover svg {
+  transform: translateX(3px);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #d4d4d8;
+}
+.btn-secondary:hover {
+  color: #ffffff;
+  border-color: rgba(0, 255, 157, 0.4);
+  background: rgba(0, 255, 157, 0.05);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--color-muted);
+}
+.btn-ghost:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* --- Award banner --- */
+.award-banner {
+  background: linear-gradient(120deg, rgba(0, 255, 157, 0.1), rgba(0, 255, 157, 0.02) 60%);
+  border: 1px solid rgba(0, 255, 157, 0.25);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.award-banner:hover {
+  border-color: rgba(0, 255, 157, 0.5);
+  background: linear-gradient(120deg, rgba(0, 255, 157, 0.16), rgba(0, 255, 157, 0.04) 60%);
+  box-shadow: 0 8px 30px rgba(0, 255, 157, 0.1);
+  transform: translateY(-2px);
+}
+
+/* --- Stat tiles --- */
+.card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 0.5rem;
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-inner:hover {
+  border-color: rgba(0, 255, 157, 0.2);
+  background: rgba(0, 255, 157, 0.03);
+}
+
+.stat-number {
+  font-family: var(--font-mono);
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--color-accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  margin-top: 0.4rem;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* --- Section headings --- */
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+.section-subtitle {
+  margin-top: 0.4rem;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.link-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  border-bottom: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+.link-arrow::after {
+  content: ' →';
+}
+.link-arrow:hover {
+  color: var(--color-accent);
+  border-bottom-color: rgba(0, 255, 157, 0.4);
+}
+
 /* Glassmorphism Navigation */
 .nav-container {
   backdrop-filter: blur(16px);
@@ -59,7 +208,8 @@
   transition: width 0.3s ease;
   box-shadow: 0 0 8px var(--color-accent-glow);
 }
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.is-active::after {
   width: 100%;
 }
 

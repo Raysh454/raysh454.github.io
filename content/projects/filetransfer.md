@@ -3,6 +3,7 @@ title: "fileTransfer"
 date: "2022-04-11"
 summary: "A simple C-based TCP file transfer utility supporting both sending and receiving files, using a custom transfer protocol."
 repo: "https://github.com/Raysh454/fileTransfer"
+tech: ["C", "TCP", "Custom Protocol"]
 ---
 
 # fileTransfer

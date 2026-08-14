@@ -11,11 +11,18 @@ IP: 10.10.10.130
 # Untitled
 # Summary
 
-- Placeholder
+Arkham is a medium difficulty Windows machine centred on a Java deserialization attack. Guest access to SMB exposes an `appserver.zip` containing a LUKS-encrypted disk image, which is cracked with hashcat to recover a Tomcat application backup. Its `web.xml` leaks the Apache MyFaces encryption key used to sign JSF `ViewState` objects, so a malicious serialized `ViewState` is forged with ysoserial to gain remote code execution as the `Alfred` user. A backup archive in Alfred's Downloads holds an email attachment with credentials for `batman`, and RunasCs is used to pivot to that account and read the Administrator flag.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- smbclient
+- dd / cryptsetup
+- hashcat
+- SerializationDumper
+- ysoserial
+- RunasCs
+- Netcat
  
 ---
 

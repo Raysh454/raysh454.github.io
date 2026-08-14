@@ -1,6 +1,15 @@
 {
   "title": "Shehryar Baloch",
-  "description": "Full‑stack engineer. I write about systems, tooling, and shipping reliable software.",
-  "siteUrl": "https://username.github.io/portfolio",
-  "image": "/og.svg"
+  "description": "Software engineer and security researcher. I build secure backends and systems tooling, and publish full attack-chain writeups.",
+  "siteUrl": "https://raysh454.github.io",
+  "image": "/og.svg",
+  "author": {
+    "name": "Shehryar Baloch",
+    "role": "Software Engineer & Security Researcher",
+    "location": "Karachi, Pakistan",
+    "email": "shehryarbaloch03@gmail.com",
+    "github": "https://github.com/Raysh454",
+    "linkedin": "https://www.linkedin.com/in/shehryar-baloch-b03b65225",
+    "hackthebox": "https://app.hackthebox.com/users/556567"
+  }
 }

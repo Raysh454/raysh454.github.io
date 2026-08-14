@@ -1,6 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import SEO from '../../components/SEO.astro';
 import { parseCustomWriteup } from '../../utils/markdown.js';
 
 export async function getStaticPaths(){
@@ -22,12 +21,15 @@ const entries = Object.entries(modules).map(([filePath, mod]) => {
 const { slug } = Astro.params;
 const matched = entries.find(entry => entry.slug === slug);
 const Post = matched?.mod?.default;
+
+const seoDescription = matched
+  ? `${matched.meta.difficulty || ''} ${matched.meta.os || ''} ${matched.meta.platform || 'HackTheBox'} machine — full attack chain writeup covering enumeration, exploitation and privilege escalation.`.trim()
+  : undefined;
 ---
-<Layout>
+<Layout title={matched?.meta.title} description={seoDescription}>
   {Post ? (
     <article class="max-w-4xl mx-auto px-4 py-6">
-      <SEO title={matched.meta.title} description={matched.meta.summary} image={matched.meta.image} url={`${Astro.site ?? ''}/writeups/${matched.meta.slug}`}/>
-      
+
       {/* Title Header */}
       <div class="mb-8 border-b border-white/5 pb-6">
         <div class="flex items-center gap-2 text-xs font-mono text-zinc-500 mb-2 uppercase tracking-widest">
@@ -39,7 +41,7 @@ const Post = matched?.mod?.default;
         <div class="text-xs font-mono text-zinc-500 flex flex-wrap gap-4">
           <div class="flex items-center gap-1">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            <span>Published: {matched.meta.date}</span>
+            <span>Published: {matched.meta.dateDisplay}</span>
           </div>
           {matched.meta.status && (
             <div class="flex items-center gap-1">
@@ -145,6 +147,10 @@ const Post = matched?.mod?.default;
       {/* Markdown Body */}
       <div class="obsidian-content">
         <Post />
+      </div>
+
+      <div class="mt-16 pt-8 border-t border-white/5">
+        <a href="/writeups" class="link-arrow">Back to all writeups</a>
       </div>
     </article>
   ) : (

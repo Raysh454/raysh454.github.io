@@ -11,11 +11,17 @@ IP: 10.10.11.51
 # EscapeTwo
 # Summary
 
-- Placeholder
+EscapeTwo is an easy difficulty Windows Active Directory machine that begins with credentials for a low-privileged account. An accounts spreadsheet on an SMB share leaks further passwords, including the MSSQL `sa` account, which is used with `xp_cmdshell` for code execution. A configuration file exposes the `sql_svc` password, and password spraying reveals that `ryan` reuses it. Ryan's `WriteOwner` right over `ca_svc` is abused with bloodyAD (via a shadow-credentials attack) to obtain its hash, and Certipy identifies an ESC4 misconfiguration on a certificate template, which is exploited to issue a certificate for the Administrator and recover the domain admin hash.
 
 # Used Tools
 
-* Placeholder
+- Nmap
+- smbclient
+- Impacket (mssqlclient)
+- bloodyAD
+- Certipy
+- PKINITtools
+- evil-winrm
  
 ---
 

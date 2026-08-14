@@ -1,8 +1,11 @@
 ---
-title: "moku"
+title: "Moku"
 date: "2025-06-30"
-summary: "A web application change tracker."
+summary: "Full-stack web change tracker and vulnerability scanner — 30+ REST endpoints, five endpoint-discovery methods, and a git-like versioning engine that diffs any two snapshots to isolate header, cookie and auth regressions."
 repo: "https://github.com/Raysh454/moku"
+featured: true
+badge: "Final Year Project"
+tech: ["Go", "React", "Python", "SSE", "Burp Suite", "OWASP ZAP"]
 ---
 
 # moku

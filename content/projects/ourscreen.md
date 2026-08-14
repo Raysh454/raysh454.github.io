@@ -3,6 +3,7 @@ title: "OurScreen"
 date: "2024-10-10"
 summary: "A tool to capture the screen and send it to your discord channel."
 repo: "https://github.com/Raysh454/OurScreen"
+tech: ["Python", "Discord API"]
 ---
 
 # OurScreen
